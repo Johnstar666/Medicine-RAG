@@ -1,13 +1,15 @@
-from typing import List
+
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
+
 from domain.entities.document import Document
 from domain.entities.query import Query
 from domain.entities.rag_response import RAGResponse
-from domain.services.rag_summarize_service import RAGSummarizeService
 from domain.services.document_retrieval_service import DocumentRetrievalService
-from infrastructure.utils.prompt_loader import load_rag_summarize_prompt
+from domain.services.rag_summarize_service import RAGSummarizeService
 from infrastructure.models.factory import chat_model
+from infrastructure.utils.prompt_loader import load_rag_summarize_prompt
+
 
 class LangChainRAGSummarizer(RAGSummarizeService):
     """基于LangChain的RAG摘要服务实现"""
@@ -65,7 +67,7 @@ class LangChainRAGSummarizer(RAGSummarizeService):
             keywords=query.keywords
         )
     
-    def retrieve_documents(self, query: str, top_k: int = 3) -> List[Document]:
+    def retrieve_documents(self, query: str, top_k: int = 6) -> list[Document]:
         """获取与查询相关的文档
         
         Args:
@@ -77,7 +79,7 @@ class LangChainRAGSummarizer(RAGSummarizeService):
         """
         return self.document_retrieval_service.retrieve_documents(query, top_k)
     
-    def deduplicate_documents(self, documents: List[Document]) -> List[Document]:
+    def deduplicate_documents(self, documents: list[Document]) -> list[Document]:
         """根据来源对文档进行去重
         
         Args:
@@ -88,7 +90,7 @@ class LangChainRAGSummarizer(RAGSummarizeService):
         """
         return self.document_retrieval_service.deduplicate_documents(documents)
     
-    def format_documents_for_context(self, documents: List[Document]) -> str:
+    def format_documents_for_context(self, documents: list[Document]) -> str:
         """将文档格式化为上下文字符串
         
         Args:
@@ -99,7 +101,7 @@ class LangChainRAGSummarizer(RAGSummarizeService):
         """
         return self.document_retrieval_service.format_documents_for_context(documents)
     
-    def get_relevant_documents(self, query: Query) -> List[Document]:
+    def get_relevant_documents(self, query: Query) -> list[Document]:
         """获取与查询相关的文档
         
         Args:

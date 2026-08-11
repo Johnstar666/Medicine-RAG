@@ -18,17 +18,54 @@ class VectorDocumentRetriever(DocumentRetrievalService):
         self.retriever = self.vector_store_service.get_retriever()
     
     def retrieve_documents(self, query: str, top_k: int = 3) -> list[Document]:
-        """根据查询检索相关文档
-        
+        """根据查询检索相关文档，保证源多样性。
+
+        策略：
+        1. 先取 top_k * 3 候选（或用 similarity_search 直接指定 k）
+        2. 按 source_type 分组：local_file / pubmed
+        3. 交叉选取 top_k 篇，至少包含每种来源 1 篇（若存在）
+
         Args:
             query: 查询文本
             top_k: 返回的文档数量
-            
+
         Returns:
             相关文档列表
         """
-        langchain_docs = self.retriever.invoke(query)
-        return self._convert_to_domain_documents(langchain_docs)
+        # 取更多候选，为源多样性留空间
+        fetch_k = max(top_k * 3, 10)
+        try:
+            langchain_docs = self.vector_store_service.vector_store.similarity_search(
+                query, k=fetch_k
+            )
+        except Exception:
+            # 若 similarity_search 失败，回退到预配置的 retriever
+            langchain_docs = self.retriever.invoke(query)
+
+        domain_docs = self._convert_to_domain_documents(langchain_docs)
+
+        # 源多样性选取：保证每种存在 source_type 至少 1 篇
+        local_docs = [
+            d
+            for d in domain_docs
+            if d.metadata.get("source_type", "local_file") != "pubmed"
+        ]
+        pubmed_docs = [
+            d for d in domain_docs if d.metadata.get("source_type") == "pubmed"
+        ]
+
+        diverse: list[Document] = []
+        # 先从每种来源取 1 篇（若存在）
+        if local_docs:
+            diverse.append(local_docs.pop(0))
+        if pubmed_docs:
+            diverse.append(pubmed_docs.pop(0))
+
+        # 剩余位置按原始排序交叉填充
+        remaining = local_docs + pubmed_docs  # 保持原有相似度排序（组间）
+        diverse.extend(remaining[: top_k - len(diverse)])
+
+        return diverse[:top_k]
     
     def deduplicate_documents(self, documents: list[Document]) -> list[Document]:
         """根据来源对文档进行去重

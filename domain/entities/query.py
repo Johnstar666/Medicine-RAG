@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import Optional
+
 
 @dataclass
 class Query:
     """查询实体"""
     question: str
-    top_k: Optional[int] = 3
-    keywords: Optional[str] = None
+    top_k: int | None = 6
+    keywords: str | None = None
     
     def with_keywords(self, keywords: str) -> "Query":
         return Query(
