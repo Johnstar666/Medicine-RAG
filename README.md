@@ -1,4 +1,4 @@
-# 生物药物资料检索知识库 - RAG 实习项目（芯筹科技）
+# 生物药物资料检索知识库 - RAG 实习项目
 
 基于 PubMed-RAG 整合的知识库系统：支持本地指导原则文档与 PubMed 期刊文献的混合检索、向量索引与 LLM 生成回答（含温哥华引文格式）。
 
@@ -59,34 +59,34 @@ python -m http.server 8080 --directory frontend
 
 ### RAG 查询（后向兼容）
 
-| 方法 | 路径        | 说明                                             |
-| ---- | ----------- | ------------------------------------------------ |
+| 方法 | 路径         | 说明                                                                  |
+| ---- | ------------ | --------------------------------------------------------------------- |
 | POST | `/rag/query` | 混合来源 RAG 查询，返回温哥华格式引文回答（支持 local_file + pubmed） |
 
 ### PubMed 文献
 
-| 方法   | 路径                          | 说明                                         |
-| ------ | ----------------------------- | -------------------------------------------- |
-| POST   | `/pubmed/search`              | 触发 PubMed 搜索并入库（可选 auto_ingest 向量索引） |
-| GET    | `/pubmed/articles`            | 分页浏览/搜索本地 PubMed 文献库（支持 status/sort 过滤） |
-| GET    | `/pubmed/articles/{pmid}`     | 获取单篇文献完整详情                         |
-| POST   | `/pubmed/ingest/{pmid}`       | 手动索引单篇文献（`?force=true` 强制重索引） |
-| POST   | `/pubmed/ingest/batch`        | 批量索引指定 PMID 列表                       |
-| POST   | `/pubmed/ingest/all-uningested` | 一键索引所有未入库文献                     |
-| DELETE | `/pubmed/articles/{pmid}`     | 删除文献（PostgreSQL 记录 + ChromaDB 向量块级联） |
+| 方法   | 路径                            | 说明                                                     |
+| ------ | ------------------------------- | -------------------------------------------------------- |
+| POST   | `/pubmed/search`                | 触发 PubMed 搜索并入库（可选 auto_ingest 向量索引）      |
+| GET    | `/pubmed/articles`              | 分页浏览/搜索本地 PubMed 文献库（支持 status/sort 过滤） |
+| GET    | `/pubmed/articles/{pmid}`       | 获取单篇文献完整详情                                     |
+| POST   | `/pubmed/ingest/{pmid}`         | 手动索引单篇文献（`?force=true` 强制重索引）             |
+| POST   | `/pubmed/ingest/batch`          | 批量索引指定 PMID 列表                                   |
+| POST   | `/pubmed/ingest/all-uningested` | 一键索引所有未入库文献                                   |
+| DELETE | `/pubmed/articles/{pmid}`       | 删除文献（PostgreSQL 记录 + ChromaDB 向量块级联）        |
 
 ### 知识库统计
 
-| 方法 | 路径             | 说明                                             |
-| ---- | ---------------- | ------------------------------------------------ |
+| 方法 | 路径               | 说明                                                              |
+| ---- | ------------------ | ----------------------------------------------------------------- |
 | GET  | `/knowledge/stats` | 知识库总体统计（本地文档数、PubMed 文献数、向量块数、按来源分组） |
 
 ## 引文格式约定
 
-| 来源类型      | 引文格式                                   |
-| ------------- | ------------------------------------------ |
-| 本地指导原则  | `[N] 《文件标题》.`                        |
-| PubMed 文献   | `[N] Authors. Title. Journal. Year. PMID: xxxxx.` |
+| 来源类型     | 引文格式                                          |
+| ------------ | ------------------------------------------------- |
+| 本地指导原则 | `[N] 《文件标题》.`                               |
+| PubMed 文献  | `[N] Authors. Title. Journal. Year. PMID: xxxxx.` |
 
 ## 项目结构
 
