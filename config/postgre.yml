@@ -1,0 +1,8 @@
+# PostgreSQL数据库配置
+
+PG_HOST: localhost
+PG_PORT: 5432
+PG_USER: postgres  # 你的数据库用户名
+PG_PASSWORD: lee9883  # 你的数据库密码
+PG_DATABASE: medicineKB  # 你的数据库名
+PG_TABLE: pubmed_articles

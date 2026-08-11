@@ -1,0 +1,2 @@
+FASTAPI_HOST: localhost
+FASTAPI_PORT: 8000
