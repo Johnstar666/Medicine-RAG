@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生物药物资料检索知识库 · medicine-rag</title>
+<meta name="description" content="基于本地指导原则与 PubMed 期刊文献的混合检索问答——每一条结论均可溯源到证据来源。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ 设计令牌 Evidence Ledger ============ */
+:root{
+  --paper:  #F3F4EF;
+  --paper-2:#ECEDE6;
+  --card:   #FCFCF9;
+  --ink:    #23272E;
+  --ink-soft:  #5D646B;
+  --ink-faint: #90979E;
+  --reg-red:   #B3261E;   /* 红头：本地指导原则 / 主操作 */
+  --reg-red-soft: #F3E2DE;
+  --lit-teal:   #0E7A6F;  /* 文献青：PubMed 国际文献 */
+  --lit-teal-soft:#DFEFEB;
+  --rule:   #D8DAD1;
+  --focus:  #B3261E;
+  --radius: 10px;
+  --serif: "Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:  "Noto Sans SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:  "IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;}
+button{font-family:inherit;}
+::selection{background:var(--reg-red);color:#fff;}
+
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:4px;}
+
+/* 页头：项目身份 + 双源状态条 */
+.site-header{
+  border-bottom:1px solid var(--rule);
+  background:var(--card);
+}
+.brand{
+  max-width:920px;margin:0 auto;padding:18px 24px 12px;
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+}
+.brand-mark{
+  font-family:var(--serif);font-weight:700;font-size:1.18rem;
+  letter-spacing:.02em;
+}
+.brand-mark small{
+  font-family:var(--mono);font-weight:500;font-size:.68rem;
+  color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;
+  margin-left:2px;
+}
+.brand-tag{font-size:.8rem;color:var(--ink-soft);}
+.src-strip{
+  max-width:920px;margin:0 auto;padding:0 24px 16px;
+  display:flex;gap:8px;flex-wrap:wrap;align-items:center;
+}
+.src-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:.72rem;font-weight:500;
+  letter-spacing:.04em;padding:4px 11px;border-radius:999px;
+  border:1px solid var(--rule);background:var(--paper);
+  color:var(--ink-soft);
+}
+.src-pill i{
+  font-style:normal;font-weight:600;font-size:.8rem;
+}
+.src-pill[data-kind="local"] i{color:var(--reg-red);}
+.src-pill[data-kind="pubmed"] i{color:var(--lit-teal);}
+.src-pill[data-kind="chunks"] i{color:var(--ink);}
+.src-pill .sep{opacity:.5;}
+
+/* 主内容轨 */
+main{max-width:920px;margin:0 auto;padding:0 24px 72px;}
+
+/* 提问区 */
+.hero{padding:64px 0 18px;text-align:left;}
+.hero h1{
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.8rem,4.4vw,2.6rem);
+  line-height:1.25;letter-spacing:.01em;margin:0 0 8px;
+}
+.hero .sub{color:var(--ink-soft);font-size:1rem;max-width:34em;margin:0 0 28px;}
+.ledger-rule{
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,var(--rule) 27px,var(--rule) 28px);
+}
+.query-form{position:relative;}
+.query-row{display:flex;gap:10px;align-items:stretch;}
+#query{
+  flex:1;min-width:0;
+  font-family:var(--sans);font-size:1.05rem;
+  color:var(--ink);background:var(--card);
+  border:1px solid var(--rule);border-radius:var(--radius);
+  padding:16px 18px;transition:border-color .15s,box-shadow .15s;
+}
+#query::placeholder{color:var(--ink-faint);}
+#query:hover{border-color:#B9BCB1;}
+#query:focus{border-color:var(--reg-red);box-shadow:0 0 0 3px rgba(179,38,30,.12);}
+.btn-query{
+  border:0;border-radius:var(--radius);cursor:pointer;
+  background:var(--reg-red);color:#fff;
+  font-family:var(--sans);font-weight:600;font-size:1rem;
+  padding:0 26px;white-space:nowrap;
+  transition:background .15s,transform .05s;
+}
+.btn-query:hover{background:#9c1f1a;}
+.btn-query:active{transform:translateY(1px);}
+.btn-query[disabled]{opacity:.55;cursor:default;}
+.examples{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;}
+.examples span{font-size:.8rem;color:var(--ink-faint);padding-top:4px;}
+.chip{
+  font-size:.82rem;color:var(--ink-soft);background:var(--card);
+  border:1px solid var(--rule);border-radius:999px;padding:5px 13px;cursor:pointer;
+  transition:border-color .15s,color .15s;
+}
+.chip:hover{border-color:var(--ink-soft);color:var(--ink);}
+
+/* 知识库统计条 */
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+  margin:26px 0 40px;
+}
+.stat{background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);padding:14px 16px;}
+.stat .num{font-family:var(--mono);font-weight:600;font-size:1.5rem;line-height:1;}
+.stat .lab{font-size:.76rem;color:var(--ink-soft);margin-top:7px;letter-spacing:.04em;}
+.stat[data-kind="local"] .num{color:var(--reg-red);}
+.stat[data-kind="pubmed"] .num{color:var(--lit-teal);}
+.stat[data-kind="chunks"] .num{color:var(--ink);}
+.bar{margin-top:10px;height:5px;border-radius:3px;background:var(--paper-2);overflow:hidden;display:flex;}
+.bar i{display:block;height:100%;}
+.bar .b-local{background:var(--reg-red);}
+.bar .b-pubmed{background:var(--lit-teal);}
+
+/* 回答区 */
+.answer-panel{display:none;}
+.answer-panel.show{display:block;animation:rise .28s ease both;}
+@keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.answer-meta{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  border-bottom:1px solid var(--rule);padding-bottom:10px;margin-bottom:18px;
+}
+.answer-meta .q{
+  font-family:var(--serif);font-weight:600;font-size:1.08rem;
+  display:flex;gap:8px;align-items:baseline;
+}
+.answer-meta .q::before{content:"问";font-family:var(--mono);font-size:.7rem;color:var(--reg-red);border:1px solid var(--reg-red);border-radius:4px;padding:1px 5px;align-self:center;}
+.answer-meta .kw{font-family:var(--mono);font-size:.7rem;color:var(--ink-faint);white-space:nowrap;}
+
+.answer-text{
+  font-size:1.03rem;line-height:1.9;
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:22px 26px;margin-bottom:26px;
+}
+.answer-text p{margin:0 0 1em;}
+.answer-text p:last-child{margin-bottom:0;}
+
+/* 引文芯片（Signature） */
+.cite{
+  display:inline-block;vertical-align:baseline;
+  font-family:var(--mono);font-weight:600;font-size:.72rem;
+  padding:1px 6px;margin:0 1px;border-radius:5px;cursor:pointer;
+  border:1px solid;transition:transform .12s,box-shadow .12s;background:transparent;
+}
+.cite[data-kind="local"]{color:var(--reg-red);border-color:rgba(179,38,30,.45);}
+.cite[data-kind="pubmed"]{color:var(--lit-teal);border-color:rgba(14,122,111,.45);}
+.cite:hover{transform:translateY(-1px);box-shadow:0 2px 6px rgba(35,39,46,.12);}
+
+/* 证据账本 */
+.ledger h2{
+  font-family:var(--serif);font-weight:700;font-size:1.18rem;margin:0 0 4px;
+}
+.ledger .ledger-sub{font-size:.8rem;color:var(--ink-soft);margin:0 0 14px;}
+.src-card{
+  display:flex;gap:14px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--rule);border-left-width:3px;
+  border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;
+  transition:box-shadow .15s,border-color .15s;
+}
+.src-card[data-kind="local"]{border-left-color:var(--reg-red);}
+.src-card[data-kind="pubmed"]{border-left-color:var(--lit-teal);}
+.src-card.flash{box-shadow:0 0 0 3px rgba(179,38,30,.18);}
+.src-card .idx{
+  font-family:var(--mono);font-weight:600;font-size:.78rem;
+  color:var(--ink-faint);padding-top:2px;min-width:22px;
+}
+.src-card .body{flex:1;min-width:0;}
+.src-badge{
+  display:inline-block;font-family:var(--mono);font-weight:600;font-size:.64rem;
+  letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border-radius:4px;margin-bottom:7px;
+}
+.src-card[data-kind="local"] .src-badge{background:var(--reg-red-soft);color:var(--reg-red);}
+.src-card[data-kind="pubmed"] .src-badge{background:var(--lit-teal-soft);color:var(--lit-teal);}
+.src-cite{
+  font-family:var(--mono);font-size:.8rem;line-height:1.7;color:var(--ink);
+  word-break:break-word;
+}
+.src-copy{
+  flex-shrink:0;align-self:center;
+  font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);
+  background:transparent;border:1px solid var(--rule);border-radius:6px;
+  padding:4px 9px;cursor:pointer;transition:color .12s,border-color .12s;
+}
+.src-copy:hover{color:var(--ink);border-color:var(--ink-soft);}
+
+/* 状态：加载 / 空 / 错误 */
+.state{
+  display:none;border:1px solid var(--rule);border-radius:var(--radius);
+  background:var(--card);padding:26px;margin:0 0 26px;
+}
+.state.show{display:block;}
+.state .state-line{font-size:.9rem;color:var(--ink-soft);display:flex;align-items:center;gap:12px;}
+.state.err{border-color:rgba(179,38,30,.5);}
+.state.err .state-line{color:var(--reg-red);}
+.spinner{
+  width:16px;height:16px;border-radius:50%;
+  border:2px solid var(--rule);border-top-color:var(--reg-red);
+  animation:spin .7s linear infinite;flex-shrink:0;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion:reduce){
+  .spinner{animation-duration:1.4s;}
+  .answer-panel.show{animation:none;}
+  .cite,.chip,.btn-query,.src-copy,.src-card{transition:none;}
+}
+
+/* PubMed 检索副区 */
+.pubmed{margin-top:56px;border-top:1px solid var(--rule);padding-top:34px;}
+.pubmed h2{font-family:var(--serif);font-weight:700;font-size:1.18rem;margin:0 0 4px;}
+.pubmed .pubmed-sub{font-size:.8rem;color:var(--ink-soft);margin:0 0 16px;}
+.pubmed-form{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.pubmed-form input[type="text"]{
+  flex:1;min-width:220px;font-family:var(--sans);font-size:.95rem;
+  border:1px solid var(--rule);border-radius:var(--radius);background:var(--card);
+  padding:12px 14px;color:var(--ink);
+}
+.pubmed-form select{
+  font-family:var(--mono);font-size:.82rem;border:1px solid var(--rule);
+  border-radius:var(--radius);background:var(--card);padding:11px 10px;color:var(--ink-soft);
+}
+.pubmed-form .check{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--ink-soft);}
+.pubmed-form .check input{accent-color:var(--lit-teal);width:15px;height:15px;}
+.btn-teal{
+  border:0;border-radius:var(--radius);cursor:pointer;
+  background:var(--lit-teal);color:#fff;
+  font-family:var(--sans);font-weight:600;font-size:.92rem;padding:0 18px;
+  transition:background .15s;
+}
+.btn-teal:hover{background:#0b655b;}
+.btn-teal[disabled]{opacity:.55;cursor:default;}
+.pubmed-results{margin-top:16px;display:none;}
+.pubmed-results.show{display:block;}
+.pubmed-summary{
+  display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;
+}
+.pubmed-summary .sm{
+  font-family:var(--mono);font-size:.74rem;color:var(--ink-soft);
+  border:1px solid var(--rule);border-radius:6px;background:var(--card);padding:4px 10px;
+}
+.pubmed-summary .sm b{font-weight:600;}
+.pubmed-list{list-style:none;margin:0;padding:0;border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden;}
+.pubmed-list li{
+  display:flex;gap:10px;align-items:baseline;padding:10px 14px;
+  background:var(--card);border-bottom:1px solid var(--rule);font-size:.86rem;
+}
+.pubmed-list li:last-child{border-bottom:0;}
+.pubmed-list .pmid{font-family:var(--mono);font-size:.72rem;color:var(--lit-teal);flex-shrink:0;}
+.pubmed-list .status{margin-left:auto;font-family:var(--mono);font-size:.7rem;flex-shrink:0;}
+.pubmed-list .status.ok{color:var(--lit-teal);}
+.pubmed-list .status.skip{color:var(--ink-faint);}
+.pubmed-list .status.fail{color:var(--reg-red);}
+.pubmed-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+
+footer{
+  border-top:1px solid var(--rule);background:var(--card);
+  color:var(--ink-faint);font-size:.76rem;
+  text-align:center;padding:20px 16px;
+}
+footer .mono{font-family:var(--mono);letter-spacing:.06em;}
+
+/* 响应式 */
+@media (max-width:640px){
+  .hero{padding-top:40px;}
+  .query-row{flex-direction:column;}
+  .btn-query{padding:14px;}
+  .stats{grid-template-columns:1fr;gap:10px;}
+  .answer-meta{flex-direction:column;gap:6px;}
+  .answer-meta .kw{white-space:normal;}
+  .pubmed-form input[type="text"]{min-width:100%;}
+  .brand{padding-top:14px;}
+}
+@media (max-width:400px){
+  .src-strip{gap:6px;}
+  .hero h1{font-size:1.6rem;}
+  .answer-text{padding:18px 18px;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <span class="brand-mark">生物药物资料检索知识库<small>medicine-rag</small></span>
+    <span class="brand-tag">指导原则 × 期刊文献 · 双源证据问答</span>
+  </div>
+  <div class="src-strip" id="srcStrip"><!-- 状态条由 /knowledge/stats 填充 --></div>
+</header>
+
+<main>
+  <section class="hero ledger-rule">
+    <h1>向知识库提问</h1>
+    <p class="sub">系统会同时检索 <b style="color:var(--reg-red)">31 份国内指导原则</b>与<b style="color:var(--lit-teal)">PubMed 国际文献</b>，综合生成回答，并逐条标注证据来源。</p>
+
+    <form class="query-form" id="queryForm">
+      <div class="query-row">
+        <input id="query" type="text" autocomplete="off"
+               placeholder="例如：mRNA疫苗的有效性数据是什么？"
+               aria-label="检索问题" autofocus>
+        <button class="btn-query" type="submit" id="askBtn">检索并回答</button>
+      </div>
+    </form>
+    <div class="examples" aria-label="示例问题">
+      <span>试试：</span>
+      <button class="chip" type="button">mRNA 疫苗有效性</button>
+      <button class="chip" type="button">2 型糖尿病诊断标准</button>
+      <button class="chip" type="button">抗菌药物临床试验设计</button>
+      <button class="chip" type="button">疫苗对预防感染的效果</button>
+    </div>
+  </section>
+
+  <section class="stats" id="stats">
+    <div class="stat" data-kind="local"><div class="num">–</div><div class="lab">本地指导原则</div></div>
+    <div class="stat" data-kind="pubmed"><div class="num">–</div><div class="lab">PubMed 期刊文献</div></div>
+    <div class="stat" data-kind="chunks"><div class="num">–</div><div class="lab">向量块</div></div>
+  </section>
+
+  <!-- 状态：空 / 加载 / 错误 -->
+  <section class="state" id="emptyState">
+    <p class="state-line">输入一个问题，从指导原则与期刊文献中检索证据并综合回答。</p>
+  </section>
+  <section class="state" id="loadingState">
+    <p class="state-line"><span class="spinner" aria-hidden="true"></span><span id="loadingText">正在检索证据并生成回答…</span></p>
+  </section>
+  <section class="state err" id="errorState">
+    <p class="state-line" id="errorText">回答生成失败。</p>
+  </section>
+
+  <!-- 回答 + 证据账本 -->
+  <section class="answer-panel" id="answerPanel">
+    <div class="answer-meta">
+      <div class="q" id="askedQ"></div>
+      <div class="kw" id="keywords"></div>
+    </div>
+    <div class="answer-text" id="answerText"></div>
+
+    <div class="ledger">
+      <h2>证据来源</h2>
+      <p class="ledger-sub">点击回答中的引文编号可定位到对应来源；可一键复制引文。</p>
+      <div id="ledgerList"></div>
+    </div>
+  </section>
+
+  <!-- PubMed 文献检索副区 -->
+  <section class="pubmed">
+    <h2>PubMed 文献检索</h2>
+    <p class="pubmed-sub">检索国际期刊文献并存入知识库；可选自动建立向量索引（需要 DASHSCOPE key）。</p>
+    <form class="pubmed-form" id="pubmedForm">
+      <input type="text" id="pmQuery" placeholder="检索词，如 COVID-19 mRNA vaccine efficacy" aria-label="PubMed 检索词">
+      <select id="pmMax" aria-label="最大条数">
+        <option value="3">最多 3 篇</option>
+        <option value="5" selected>最多 5 篇</option>
+        <option value="10">最多 10 篇</option>
+      </select>
+      <label class="check"><input type="checkbox" id="pmAuto" checked> 入库后自动索引</label>
+      <button class="btn-teal" type="submit" id="pmBtn">搜索并入库</button>
+    </form>
+    <div class="pubmed-results" id="pmResults">
+      <div class="pubmed-summary" id="pmSummary"></div>
+      <ul class="pubmed-list" id="pmList"></ul>
+      <div class="pubmed-actions">
+        <button class="btn-teal" type="button" id="ingestAllBtn">索引全部未入库文献</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="mono">medicine-rag</span> · 本地指导原则 <span style="color:var(--reg-red)">红</span> / PubMed 文献 <span style="color:var(--lit-teal)">青</span> · API <span class="mono" id="apiHost">localhost:8000</span>
+</footer>
+
+<script>
+/* ============ 配置 ============ */
+const API_BASE = localStorage.getItem("medicine-rag-api") || "http://localhost:8000";
+document.getElementById("apiHost").textContent = API_BASE.replace(/^https?:\/\//, "");
+
+/* ============ 工具 ============ */
+const $ = (id) => document.getElementById(id);
+function esc(s){
+  return String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+}
+async function api(path, opts = {}){
+  const res = await fetch(API_BASE + path, Object.assign({
+    headers: { "Content-Type": "application/json" }
+  }, opts));
+  let body;
+  try { body = await res.json(); } catch { throw new Error("服务返回了无法解析的内容"); }
+  if (!res.ok || (body.code !== undefined && body.code !== 200)) {
+    throw new Error((body.detail) ? (typeof body.detail === "string" ? body.detail : JSON.stringify(body.detail)) : (body.message || "请求失败"));
+  }
+  return body.data;
+}
+
+/* ============ 知识库统计条 ============ */
+async function loadStats(){
+  try {
+    const d = await api("/knowledge/stats");
+    $("stats").querySelector('[data-kind="local"] .num').textContent  = d.local_documents ?? "–";
+    $("stats").querySelector('[data-kind="pubmed"] .num').textContent = d.pubmed_articles_total ?? "–";
+    $("stats").querySelector('[data-kind="chunks"] .num').textContent = d.total_vector_chunks ?? "–";
+
+    const local  = d.by_source_type && d.by_source_type.local_file  || 0;
+    const pubmed = d.by_source_type && d.by_source_type.pubmed     || 0;
+    const total = (local + pubmed) || 1;
+    const statCard = $("stats").querySelector('[data-kind="chunks"]');
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.innerHTML = `<i class="b-local" style="width:${(local/total*100).toFixed(1)}%"></i><i class="b-pubmed" style="width:${(pubmed/total*100).toFixed(1)}%"></i>`;
+    statCard.appendChild(bar);
+
+    const strip = $("srcStrip");
+    strip.innerHTML =
+      `<span class="src-pill" data-kind="local"><i>${d.local_documents ?? 0}</i>本地指导原则</span>` +
+      `<span class="src-pill" data-kind="pubmed"><i>${d.pubmed_articles_total ?? 0}</i>PubMed 文献</span>` +
+      `<span class="src-pill" data-kind="pubmed"><i>${d.pubmed_articles_ingested ?? 0}</i>已索引</span>` +
+      `<span class="src-pill" data-kind="chunks"><i>${d.total_vector_chunks ?? 0}</i>向量块</span>`;
+  } catch (e) {
+    $("srcStrip").innerHTML = `<span class="src-pill"><i>—</i>知识库统计不可用（后端未启动？）</span>`;
+  }
+}
+
+/* ============ 回答渲染：双源引文芯片 + 证据账本 ============ */
+const KIND = (s) => (/^PMID:/.test(s || "") ? "pubmed" : "local");
+
+function renderLedger(sources){
+  const list = $("ledgerList");
+  list.innerHTML = (sources || []).map((s, i) => {
+    const kind = KIND(s);
+    const badge = kind === "pubmed" ? "PubMed 文献" : "本地指导原则";
+    return `
+      <div class="src-card" id="src-${i}" data-kind="${kind}">
+        <span class="idx">[${i + 1}]</span>
+        <div class="body">
+          <span class="src-badge">${badge}</span>
+          <div class="src-cite">${esc(s)}</div>
+        </div>
+        <button class="src-copy" type="button" data-copy="${esc(s)}" title="复制引文">复制</button>
+      </div>`;
+  }).join("");
+}
+function bindCopy(){
+  document.querySelectorAll(".src-copy").forEach(btn => {
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(btn.dataset.copy)
+        .then(() => { btn.textContent = "已复制"; setTimeout(() => btn.textContent = "复制", 1400); })
+        .catch(() => {});
+    });
+  });
+}
+const SUPER = { "¹":"1","²":"2","³":"3","⁴":"4","⁵":"5","⁶":"6","⁷":"7","⁸":"8","⁹":"9","⁰":"0" };
+function renderAnswer(d){
+  const sources = d.sources || [];
+  // 将回答中的引文标记（[N] 或 Unicode 上标 ¹²³…）替换为可点击芯片
+  const parts = d.answer.split(/(\[\d+\]|[¹²³⁴⁵⁶⁷⁸⁹⁰]+)/g);
+  $("answerText").innerHTML = parts.map(part => {
+    let num = null;
+    const m = part.match(/^\[(\d+)\]$/);
+    if (m) num = m[1];
+    else if (/^[¹²³⁴⁵⁶⁷⁸⁹⁰]+$/.test(part))
+      num = part.replace(/./g, ch => SUPER[ch] || "");  // 上标串 → 十进制数字
+    if (num === null) return esc(part);
+    const idx = parseInt(num, 10) - 1;
+    const src = sources[idx];
+    if (!src) return esc(part);
+    const kind = KIND(src);
+    return `<button class="cite" data-kind="${kind}" data-target="${idx}" type="button" title="${esc(src)}">[${num}]</button>`;
+  }).join("");
+  renderLedger(sources);
+  bindCopy();
+  // 芯片 → 账本定位
+  document.querySelectorAll(".cite").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = $("src-" + btn.dataset.target);
+      if (!card) return;
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.add("flash");
+      setTimeout(() => card.classList.remove("flash"), 1600);
+    });
+  });
+  $("askedQ").textContent = d.question || "";
+  $("keywords").textContent = d.keywords ? ("关键词 " + d.keywords) : "";
+}
+
+/* ============ 问答流程 ============ */
+function showState(which){
+  ["emptyState","loadingState","errorState"].forEach(id => $(id).classList.remove("show"));
+  $("answerPanel").classList.remove("show");
+  if (which) $(which).classList.add("show");
+}
+async function ask(q){
+  if (!q || !q.trim()) return;
+  const btn = $("askBtn");
+  btn.disabled = true;
+  showState("loadingState");
+  $("loadingText").textContent = "正在检索证据并生成回答…";
+  try {
+    const d = await api("/rag/query", { method: "POST", body: JSON.stringify({ question: q }) });
+    showState(null);
+    $("answerPanel").classList.add("show");
+    renderAnswer(d);
+  } catch (e) {
+    showState("errorState");
+    $("errorText").textContent = "回答生成失败：" + e.message + "。请确认后端服务已启动，或稍后重试。";
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+/* ============ PubMed 检索副区 ============ */
+const STATUS_TEXT = { ingested: "已入库", stored: "已入库", skipped: "已存在", failed: "失败", "already_ingested": "已索引" };
+function statusClass(st){ return st === "failed" ? "fail" : (st === "skipped" ? "skip" : "ok"); }
+async function pubmedSearch(ev){
+  ev.preventDefault();
+  const q = $("pmQuery").value.trim();
+  if (!q) return;
+  const btn = $("pmBtn");
+  btn.disabled = true;
+  try {
+    const d = await api("/pubmed/search", { method: "POST", body: JSON.stringify({
+      query: q, max_results: parseInt($("pmMax").value, 10), auto_ingest: $("pmAuto").checked
+    })});
+    $("pmResults").classList.add("show");
+    $("pmSummary").innerHTML =
+      `<span class="sm">命中 <b>${d.pmids_found}</b></span>` +
+      `<span class="sm">新入库 <b>${d.pmids_new}</b></span>` +
+      `<span class="sm">已索引 <b>${d.pmids_ingested}</b></span>` +
+      `<span class="sm">跳过 <b>${d.pmids_skipped}</b></span>` +
+      `<span class="sm">失败 <b>${d.pmids_failed}</b></span>`;
+    $("pmList").innerHTML = (d.details || []).map(it =>
+      `<li><span class="pmid">PMID:${esc(it.pmid)}</span><span>${esc(it.title || "")}</span>` +
+      `<span class="status ${statusClass(it.status)}">${STATUS_TEXT[it.status] || esc(it.status)}</span></li>`
+    ).join("");
+    loadStats(); // 刷新统计
+  } catch (e) {
+    $("pmResults").classList.add("show");
+    $("pmSummary").innerHTML = `<span class="sm" style="color:var(--reg-red)">检索失败：${esc(e.message)}</span>`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+async function ingestAll(){
+  const btn = $("ingestAllBtn");
+  btn.disabled = true; btn.textContent = "索引中…";
+  try {
+    const d = await api("/pubmed/ingest/all-uningested", { method: "POST" });
+    btn.textContent = `已索引 ${d.ingested} / 待处理 ${d.total_uningested}`;
+    loadStats();
+  } catch (e) {
+    btn.textContent = "索引失败";
+  } finally {
+    setTimeout(() => { btn.disabled = false; btn.textContent = "索引全部未入库文献"; }, 1500);
+  }
+}
+
+/* ============ 事件绑定 ============ */
+$("queryForm").addEventListener("submit", e => { e.preventDefault(); ask($("query").value); });
+document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
+  $("query").value = c.textContent; ask(c.textContent);
+}));
+$("pubmedForm").addEventListener("submit", pubmedSearch);
+$("ingestAllBtn").addEventListener("click", ingestAll);
+
+/* 初始：空状态 + 统计 */
+showState("emptyState");
+loadStats();
+</script>
+</body>
+</html>

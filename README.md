@@ -42,6 +42,19 @@ python main.py
 # Swagger UI: http://localhost:8000/docs
 ```
 
+### 前端界面
+
+`frontend/index.html` 为单文件可视化界面（RAG 双源问答 + 引文证据账本 + PubMed 检索），对接上述 API：
+
+```bash
+python -m http.server 8080 --directory frontend
+# 浏览器访问 http://localhost:8080/index.html
+```
+
+- 后端 CORS 已开放（`allow_origins=["*"]`），无需额外配置即可跨源调用。
+- 回答中的引文标记（`[N]` 或上标 `¹²³`）渲染为按来源着色的可点击芯片（红=本地指导原则、青=PubMed 文献），点击定位到下方证据账本对应来源卡，引文可一键复制。
+- 后端地址默认 `http://localhost:8000`，可通过 `localStorage["medicine-rag-api"]` 覆盖。
+
 ## API 端点
 
 ### RAG 查询（后向兼容）
