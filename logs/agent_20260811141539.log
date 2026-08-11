@@ -1,0 +1,48 @@
+2026-08-11 14:19:00,938 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:19:01,577 - agent - INFO - vector_store.py:108 - 直接写入 7 个文档到 ChromaDB
+2026-08-11 14:19:51,750 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:19:52,332 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:19:52,335 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:19:52,939 - agent - INFO - vector_store.py:108 - 直接写入 7 个文档到 ChromaDB
+2026-08-11 14:19:52,942 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:19:54,027 - agent - INFO - vector_store.py:108 - 直接写入 11 个文档到 ChromaDB
+2026-08-11 14:19:54,029 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:19:54,564 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:15,827 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:37,584 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:26:37,588 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:38,269 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:38,273 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:39,016 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:26:39,019 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:39,527 - agent - INFO - vector_store.py:108 - 直接写入 2 个文档到 ChromaDB
+2026-08-11 14:26:39,529 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:40,133 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:26:40,136 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:40,647 - agent - INFO - vector_store.py:108 - 直接写入 1 个文档到 ChromaDB
+2026-08-11 14:26:40,649 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:41,297 - agent - INFO - vector_store.py:108 - 直接写入 6 个文档到 ChromaDB
+2026-08-11 14:26:41,301 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:41,808 - agent - INFO - vector_store.py:108 - 直接写入 2 个文档到 ChromaDB
+2026-08-11 14:26:41,812 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:42,425 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:42,428 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:43,020 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:43,029 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:43,628 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:43,630 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:44,325 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:26:44,328 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:44,960 - agent - INFO - vector_store.py:108 - 直接写入 5 个文档到 ChromaDB
+2026-08-11 14:26:44,962 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:45,578 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:45,581 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:46,210 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB
+2026-08-11 14:26:46,213 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:46,704 - agent - INFO - vector_store.py:108 - 直接写入 1 个文档到 ChromaDB
+2026-08-11 14:26:46,706 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:47,310 - agent - INFO - vector_store.py:108 - 直接写入 2 个文档到 ChromaDB
+2026-08-11 14:26:47,314 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:47,793 - agent - INFO - vector_store.py:108 - 直接写入 1 个文档到 ChromaDB
+2026-08-11 14:26:47,796 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 14:26:48,377 - agent - INFO - vector_store.py:108 - 直接写入 4 个文档到 ChromaDB

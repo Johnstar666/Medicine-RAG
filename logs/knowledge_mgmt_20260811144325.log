@@ -1,0 +1,19 @@
+2026-08-11 14:43:27,109 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=None, status=all, sort_by=created_at, order=desc
+2026-08-11 14:43:27,122 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=vaccine, status=all, sort_by=created_at, order=desc
+2026-08-11 14:43:27,124 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=None, status=uningested, sort_by=created_at, order=desc
+2026-08-11 14:43:27,125 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=None, status=all, sort_by=pmid, order=asc
+2026-08-11 14:43:27,129 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=None, status=all, sort_by=created_at, order=desc
+2026-08-11 14:43:27,131 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=20, search=None, status=all, sort_by=created_at, order=desc
+2026-08-11 14:43:27,142 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 3 vector chunks for PMID 11111111
+2026-08-11 14:43:27,142 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 11111111: True
+2026-08-11 14:43:27,144 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 5 vector chunks for PMID 11111111
+2026-08-11 14:43:27,144 - knowledge_mgmt - ERROR - knowledge_management_service.py:245 - Failed to delete PG record for PMID 11111111: PG down
+2026-08-11 14:43:27,146 - knowledge_mgmt - ERROR - knowledge_management_service.py:234 - Failed to delete vectors for PMID 11111111: ChromaDB down
+2026-08-11 14:43:27,146 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 11111111: True
+2026-08-11 14:43:27,148 - knowledge_mgmt - ERROR - knowledge_management_service.py:234 - Failed to delete vectors for PMID 11111111: VS down
+2026-08-11 14:43:27,148 - knowledge_mgmt - ERROR - knowledge_management_service.py:245 - Failed to delete PG record for PMID 11111111: PG down
+2026-08-11 14:43:27,149 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 0 vector chunks for PMID 11111111
+2026-08-11 14:43:27,150 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 11111111: True
+2026-08-11 14:43:27,152 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 3 vector chunks for PMID nonexistent
+2026-08-11 14:43:27,152 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID nonexistent: False
+2026-08-11 14:43:27,166 - knowledge_mgmt - WARNING - knowledge_management_service.py:314 - Local document directory does not exist: /nonexistent/path/12345

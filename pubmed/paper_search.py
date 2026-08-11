@@ -1,54 +1,121 @@
-from Bio import Entrez
+"""
+PubMed 文献搜索 → 入库的独立管线。
 
-from utils.logger_handler import logger
-from utils.postgres_db import PostgresDB_singleton
+功能: 搜索 PubMed → 逐 PMID 查重 → 提取详情 → 插入 PostgreSQL。
+
+用法:
+  from pubmed.paper_search import PubMedSearchPipeline
+  pipeline = PubMedSearchPipeline()
+  results = pipeline.run("COVID-19 mRNA vaccine", max_results=10)
+"""
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from infrastructure.persistence.postgres_db import PostgresDB
+from infrastructure.utils.config_handler import pubmed_conf
+from infrastructure.utils.logger_handler import get_logger
 from pubmed.pubmed_retriever import PubMedRetriever
-from utils.config_handler import pubmed_conf
 
-Entrez.email = pubmed_conf["email"]  # 必须设置
-Entrez.api_key = pubmed_conf["api_key"]  # 可选，提升至10 req/s
-Entrez.max_tries=pubmed_conf["max_tries"]
-Entrez.sleep_between_tries=pubmed_conf["sleep_between_tries"]
+logger = get_logger(name="pubmed_pipeline")
 
-def main(pubmed_query):
-    """主执行函数：检索→提取→查重→插入"""
-    # 初始化工具类
-    pubmed_retriever = PubMedRetriever()
-    db = PostgresDB_singleton
 
-    try:
-        # 1. 建立数据库连接
-        db.connect()
-        # 2. PubMed检索：获取PMID列表
-        pmids = pubmed_retriever.search_pubmed(pubmed_query)
-        if not pmids:
-            return
-        # 3. 遍历PMID：提取数据→查重→插入
-        for pmid in pmids:
-            if db.is_pmid_exist(pmid):
-                logger.info(f"文献已存在，跳过插入（pmid={pmid}）")
-                continue
-            # 提取文献数据
-            article_data = pubmed_retriever.fetch_article_details(pmid)
-            # 插入数据库
-            db.insert_article(article_data)
-    except Exception as e:
-        logger.error(f"主程序执行失败：{str(e)}", exc_info=True)
-    finally:
-        # 确保数据库连接关闭
-        db.close()
+class PubMedSearchPipeline:
+    """PubMed 搜索入库管线（独立于 API 服务，可命令行运行）。
+
+    与 PubMedSearchAppService 的关系:
+        - PubMedSearchPipeline: 纯搜索+入库，不含向量索引
+        - PubMedSearchAppService: 搜索+入库+索引的完整编排，供 API 使用
+
+    管道在内部调用 PostgresDB 的上下文管理器管理连接生命周期。
+    """
+
+    def __init__(self) -> None:
+        """初始化 PubMedSearchPipeline。
+
+        创建 PubMedRetriever 实例用于后续搜索和文献详情获取。
+        """
+        self._retriever = PubMedRetriever()
+
+    def run(self, query: str, max_results: int | None = None) -> list[dict]:
+        """执行搜索入库管线。
+
+        Args:
+            query: PubMed 查询词。
+            max_results: 最大结果数，默认从 pubmed_conf 配置读取。
+
+        Returns:
+            list of dict: 每条文献的处理结果。
+                每项格式: {"pmid": str, "status": str, "title": str}
+                status 取值: "inserted" | "skipped" | "failed"
+        """
+        if max_results is None:
+            max_results = pubmed_conf.get("max_results", 5)
+
+        results: list[dict] = []
+
+        logger.info(
+            "Starting PubMed search pipeline: query='%s', max_results=%d",
+            query,
+            max_results,
+        )
+
+        with PostgresDB() as db:
+            # Step 1: 搜索 PubMed → PMID 列表
+            pmids: list[str] = self._retriever.search_pubmed(query)
+            if not pmids:
+                logger.info("No PMIDs found for query '%s'", query)
+                return results
+
+            logger.info("Found %d PMIDs for query '%s'", len(pmids), query)
+
+            # Step 2: 遍历 PMID，查重 → fetch → insert
+            inserted_count = 0
+            skipped_count = 0
+            failed_count = 0
+            for pmid in pmids:
+                result: dict = {"pmid": pmid, "status": "unknown", "title": ""}
+                try:
+                    if db.is_pmid_exist(pmid):
+                        result["status"] = "skipped"
+                        result["reason"] = "already_exists"
+                        skipped_count += 1
+                        logger.info("PMID %s already exists, skipped", pmid)
+                        results.append(result)
+                        continue
+
+                    article_data: dict = self._retriever.fetch_article_details(pmid)
+                    article_data["search_query"] = query
+                    db.insert_article(article_data)
+
+                    result["status"] = "inserted"
+                    title = article_data.get("article_info", {}).get("title", "")
+                    result["title"] = title
+                    inserted_count += 1
+                    logger.info(
+                        "PMID %s inserted successfully: '%s'", pmid, title
+                    )
+                except Exception as e:
+                    logger.error("Failed to process PMID %s: %s", pmid, e)
+                    result["status"] = "failed"
+                    result["reason"] = str(e)
+                    failed_count += 1
+
+                results.append(result)
+
+            logger.info(
+                "Pipeline finished: inserted=%d, skipped=%d, failed=%d, total=%d",
+                inserted_count, skipped_count, failed_count, len(pmids),
+            )
+
+        return results
+
 
 if __name__ == "__main__":
-    # 测试：传入查询词，示例为「COVID-19 vaccination and cardiovascular disease」
-    test_query = ("heart")
-    main(test_query)
-
-#
-# keyword = input("Enter keywords: ")
-# max_results = pubmed_conf["max_results"]
-#
-# handle = Entrez.esearch(db="pubmed", term=keyword, retmax=max_results)
-# record = Entrez.read(handle)
-# print("匹配的PMID列表：", record["IdList"])
-# handle.close()
-
+    test_query = "heart"
+    pipeline = PubMedSearchPipeline()
+    results = pipeline.run(test_query)
+    for r in results:
+        print(f"PMID: {r['pmid']}, Status: {r['status']}")

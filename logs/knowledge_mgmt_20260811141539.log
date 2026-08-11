@@ -1,0 +1,1 @@
+2026-08-11 14:18:16,865 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=24, search=None, status=uningested, sort_by=created_at, order=desc

@@ -8,3 +8,7 @@ allow_knowledge_file_type: ["txt","pdf","doc","docx"]
 chunk_size: 800
 chunk_overlap: 200
 separator: ["\n\n","\n",".","!","?","。","！","？"," ",""]
+
+pubmed_chunk_size: 800
+pubmed_chunk_overlap: 200
+pubmed_separator: ["\n\n", "\n", ". ", "! ", "? ", "。", "！", "？", " ", ""]

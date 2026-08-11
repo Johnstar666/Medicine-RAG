@@ -1,0 +1,6 @@
+2026-08-11 13:54:13,023 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=3, search=None, status=all, sort_by=created_at, order=desc
+2026-08-11 13:54:13,119 - knowledge_mgmt - DEBUG - knowledge_management_service.py:114 - list_articles query: page=1, page_size=2, search=vaccine, status=all, sort_by=created_at, order=desc
+2026-08-11 13:55:24,789 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 0 vector chunks for PMID 34755408
+2026-08-11 13:55:24,795 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 34755408: True
+2026-08-11 13:55:24,936 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 0 vector chunks for PMID 99999999
+2026-08-11 13:55:24,937 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 99999999: False

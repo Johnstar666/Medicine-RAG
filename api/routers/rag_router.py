@@ -1,10 +1,15 @@
-import sys
 import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from fastapi import  HTTPException, APIRouter
-from schemas.rag_query import QueryRequest, ApiResponse, RAGResponse
-from domain.entities.query import Query as DomainQuery
+import sys
+
+sys.path.insert(
+    0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
+
+from fastapi import APIRouter, HTTPException
+
 from application.services.rag_query_service import RAGQueryService
+from domain.entities.query import Query as DomainQuery
+from schemas.rag_query import ApiResponse, QueryRequest, RAGResponse
 
 router = APIRouter(prefix="/rag")
 

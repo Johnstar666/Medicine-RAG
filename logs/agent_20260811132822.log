@@ -1,0 +1,79 @@
+2026-08-11 13:28:48,083 - agent - INFO - vector_store.py:108 - 直接写入 3 个文档到 ChromaDB
+2026-08-11 13:28:48,086 - agent - ERROR - vector_store.py:111 - ChromaDB 写入失败: chroma down
+2026-08-11 13:28:48,089 - agent - INFO - vector_store.py:135 - 按条件 {'pmid': 'test123'} 删除了 2 个 chunks
+2026-08-11 13:28:48,092 - agent - DEBUG - vector_store.py:131 - 未找到匹配的向量: {'pmid': 'nonexistent'}
+2026-08-11 13:28:48,094 - agent - ERROR - vector_store.py:138 - ChromaDB 条件删除失败 (filter={'pmid': '123'}): get error
+2026-08-11 13:28:48,102 - agent - ERROR - vector_store.py:169 - 获取 ChromaDB 统计信息失败: count error
+2026-08-11 13:28:48,106 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 13:28:48,109 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=local_file, chunk_size=800, chunk_overlap=200)
+2026-08-11 13:28:48,111 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=local_file, chunk_size=800, chunk_overlap=200)
+2026-08-11 13:28:48,114 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 13:28:48,274 - agent - ERROR - pubmed_retriever.py:115 - 提取文献详情失败 (pmid=invalid_pmid): Invalid PMID
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\pubmed\pubmed_retriever.py", line 50, in fetch_article_details
+    records = Entrez.read(handle)
+              ^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: Invalid PMID
+2026-08-11 13:28:48,300 - agent - INFO - pubmed_retriever.py:138 - 检索到3篇文献，PMID：['33301246', '33301247', '33301248']
+2026-08-11 13:28:48,303 - agent - WARNING - pubmed_retriever.py:136 - 查询词「xyznonexistentquery」未检索到文献
+2026-08-11 13:28:48,305 - agent - ERROR - pubmed_retriever.py:141 - PubMed检索失败（query=test query）：Network error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\pubmed\pubmed_retriever.py", line 131, in search_pubmed
+    result = Entrez.read(handle)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1187, in _execute_mock_call
+    raise result
+RuntimeError: Network error
+2026-08-11 13:28:48,307 - agent - ERROR - pubmed_retriever.py:141 - PubMed检索失败（query=test query）：Persistent error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\pubmed\pubmed_retriever.py", line 131, in search_pubmed
+    result = Entrez.read(handle)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: Persistent error
+2026-08-11 13:28:48,308 - agent - ERROR - pubmed_retriever.py:156 - 重试后仍失败：Persistent error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\pubmed\pubmed_retriever.py", line 152, in search_pubmed
+    result = Entrez.read(handle)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\pubmed\pubmed_retriever.py", line 131, in search_pubmed
+    result = Entrez.read(handle)
+             ^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: Persistent error

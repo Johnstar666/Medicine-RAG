@@ -1,0 +1,10 @@
+name: medicine-rag
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pyyaml
+  - pip
+  - pip:
+      - -r requirements.txt

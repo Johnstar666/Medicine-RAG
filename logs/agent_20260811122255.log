@@ -1,0 +1,10 @@
+2026-08-11 12:22:55,114 - agent - INFO - vector_store.py:108 - 直接写入 3 个文档到 ChromaDB
+2026-08-11 12:22:55,118 - agent - ERROR - vector_store.py:111 - ChromaDB 写入失败: chroma down
+2026-08-11 12:22:55,121 - agent - INFO - vector_store.py:135 - 按条件 {'pmid': 'test123'} 删除了 2 个 chunks
+2026-08-11 12:22:55,124 - agent - DEBUG - vector_store.py:131 - 未找到匹配的向量: {'pmid': 'nonexistent'}
+2026-08-11 12:22:55,126 - agent - ERROR - vector_store.py:138 - ChromaDB 条件删除失败 (filter={'pmid': '123'}): get error
+2026-08-11 12:22:55,134 - agent - ERROR - vector_store.py:169 - 获取 ChromaDB 统计信息失败: count error
+2026-08-11 12:22:55,139 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)
+2026-08-11 12:22:55,144 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=local_file, chunk_size=800, chunk_overlap=200)
+2026-08-11 12:22:55,147 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=local_file, chunk_size=800, chunk_overlap=200)
+2026-08-11 12:22:55,149 - agent - INFO - vector_store.py:198 - 创建 splitter (source_type=pubmed, chunk_size=800, chunk_overlap=200)

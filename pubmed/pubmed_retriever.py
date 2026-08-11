@@ -1,9 +1,10 @@
-import os
+import copy
 import time
 
 from Bio import Entrez
-from utils.config_handler import pubmed_conf
-from utils.logger_handler import logger
+
+from infrastructure.utils.config_handler import pubmed_conf
+from infrastructure.utils.logger_handler import logger
 
 
 class PubMedRetriever:
@@ -11,51 +12,110 @@ class PubMedRetriever:
 
     def __init__(self):
         # 初始化Entrez，强制指定返回XML（Entrez.read原生支持）
-        Entrez.email = pubmed_conf['email']
-        Entrez.api_key = pubmed_conf['api_key']
+        Entrez.email = pubmed_conf["email"]
+        Entrez.api_key = pubmed_conf["api_key"]
         Entrez.max_tries = pubmed_conf["max_tries"]  # 增加重试次数
         Entrez.sleep_between_tries = 3  # 重试间隔3秒
         self.max_results = pubmed_conf["max_results"]
         # 补充请求头（NCBI要求）
         Entrez.tool = "Python"
 
-    def fetch_article_details(self, pmid):
-        """根据PMID获取文献详情（简化版，保证能解析）"""
+    def fetch_article_details(self, pmid: str) -> dict:
+        """根据 PMID 获取文献详情（扩展版）。
+
+        提取字段（扩展现有 article_info JSONB）:
+            title, authors, abstract, journal, doi,
+            publish_date, pmc_id, publication_type
+
+        Returns:
+            {
+                "pmid": str,
+                "article_info": {
+                    "title": str, "authors": [str], "abstract": str,
+                    "journal": str, "doi": str, "publish_date": str,
+                    "pmc_id": str, "publication_type": str,
+                },
+                "study_groups": [str],
+                "results_info": {
+                    "raw_abstract": str, "endpoints": str, "stats": str
+                } | None,
+                "objectives": str,
+                "is_free_download": bool,
+                "search_query": str,
+                "raw_response": dict,
+            }
+        """
         try:
-            handle = Entrez.efetch(
-                db="pubmed",
-                id=pmid,
-                rettype="xml",
-                retmode="text"
-            )
+            handle = Entrez.efetch(db="pubmed", id=pmid, rettype="xml", retmode="text")
             records = Entrez.read(handle)
             handle.close()
 
-            # 基础数据提取（保证不报错）
             article = records["PubmedArticle"][0]["MedlineCitation"]["Article"]
-            abstract = article.get("Abstract", {}).get("AbstractText", "")
-            abstract = " ".join(abstract) if isinstance(abstract, list) else str(abstract)
+            medline = records["PubmedArticle"][0]["MedlineCitation"]
 
-            # 组装数据库所需字段
-            return {
-                "pmid": pmid,
-                "article_info": {
-                    "title": article.get("ArticleTitle", ""),
-                    "authors": [f"{a.get('LastName', '')} {a.get('ForeName', '')}" for a in
-                                article.get("AuthorList", [])],
-                    "abstract": abstract,
-                    "journal": article.get("Journal", {}).get("Title", "")
-                },
-                "study_groups": [],  # 先默认空数组，后续可扩展
-                "results_info": {"raw_abstract": abstract[:200]},
-                "objectives": abstract[:200] if abstract else "未明确研究目标",
-                "is_free_download": False  # 先默认，后续可从PMC标识解析
+            # 提取各字段（使用静态辅助方法）
+            abstract_text = self._parse_abstract(article.get("Abstract", {}))
+            authors = self._parse_authors(article.get("AuthorList", []))
+            pub_date = self._parse_publish_date(
+                article.get("Journal", {})
+                .get("JournalIssue", {})
+                .get("PubDate", {})
+            )
+            article_ids = (
+                records["PubmedArticle"][0]
+                .get("PubmedData", {})
+                .get("ArticleIdList", [])
+            )
+            doi = self._parse_doi(article_ids)
+            pmc_id = self._get_pmc_id(article_ids)
+            pub_type_list = medline.get("PublicationTypeList", [])
+            pub_types = [str(pt) for pt in pub_type_list] if pub_type_list else []
+            publication_type = ", ".join(pub_types) if pub_types else ""
+
+            # 期刊名（缩写优先）
+            journal_data = article.get("Journal", {})
+            journal_title = (
+                journal_data.get("ISOAbbreviation", "")
+                or journal_data.get("Title", "")
+            )
+
+            # 构建返回数据
+            article_info = {
+                "title": str(article.get("ArticleTitle", "")),
+                "authors": [
+                    f"{a.get('last_name', '')} {a.get('first_name', '')}"
+                    for a in authors
+                ],
+                "abstract": abstract_text,
+                "journal": str(journal_title),
+                "doi": doi,
+                "publish_date": pub_date,
+                "pmc_id": pmc_id,
+                "publication_type": publication_type,
             }
+
+            results_info = self._parse_results_info(abstract_text)
+            objectives = self._parse_objectives(abstract_text) or "未明确研究目标"
+
+            # 原始响应（供调试）
+            raw_response = copy.deepcopy(records)
+
+            return {
+                "pmid": str(pmid),
+                "article_info": article_info,
+                "study_groups": self._parse_study_groups(abstract_text),
+                "results_info": results_info,
+                "objectives": objectives,
+                "is_free_download": self._is_free_download(article_ids),
+                "search_query": "",
+                "raw_response": raw_response,
+            }
+
         except Exception as e:
-            logger.error(f"提取文献详情失败（pmid={pmid}）：{str(e)}", exc_info=True)
+            logger.error(f"提取文献详情失败 (pmid={pmid}): {str(e)}", exc_info=True)
             raise
 
-    def search_pubmed(self, query):
+    def search_pubmed(self, query: str) -> list:
         """修复：移除retmode="json"，按XML解析，补充请求头"""
         try:
             # 1. 构建检索参数（移除retmode，默认返回XML）
@@ -65,7 +125,7 @@ class PubMedRetriever:
                 retmax=self.max_results,
                 sort="relevance",
                 # 关键：移除retmode="json"，改用默认XML格式
-                usehistory="y"  # 启用历史记录，提升后续efetch效率
+                usehistory="y",  # 启用历史记录，提升后续efetch效率
             )
             # 2. 按XML解析返回数据（Entrez.read原生支持）
             result = Entrez.read(handle)
@@ -76,7 +136,7 @@ class PubMedRetriever:
                 logger.warning(f"查询词「{query}」未检索到文献")
                 return []
             logger.info(f"检索到{len(pmids)}篇文献，PMID：{pmids}")
-            return pmids
+            return list(pmids)
         except Exception as e:
             logger.error(f"PubMed检索失败（query={query}）：{str(e)}", exc_info=True)
             # 手动重试（针对网络波动）
@@ -87,11 +147,11 @@ class PubMedRetriever:
                     term=query,
                     retmax=self.max_results,
                     sort="relevance",
-                    usehistory="y"
+                    usehistory="y",
                 )
                 result = Entrez.read(handle)
                 handle.close()
-                return result["IdList"]
+                return list(result["IdList"])
             except Exception as e2:
                 logger.error(f"重试后仍失败：{str(e2)}", exc_info=True)
                 raise
@@ -104,7 +164,7 @@ class PubMedRetriever:
             if "LastName" in author and "ForeName" in author:
                 authors.append({
                     "last_name": author["LastName"],
-                    "first_name": author["ForeName"]
+                    "first_name": author["ForeName"],
                 })
         return authors
 
@@ -125,7 +185,7 @@ class PubMedRetriever:
         month = date_data.get("Month", "01")
         day = date_data.get("Day", "01")
         if year:
-            return f"{year}-{month.zfill(2)}-{day.zfill(2)}"
+            return f"{year}-{str(month).zfill(2)}-{str(day).zfill(2)}"
         return ""
 
     @staticmethod
@@ -133,6 +193,14 @@ class PubMedRetriever:
         """解析DOI号"""
         for aid in article_id_list:
             if aid.attributes.get("IdType") == "doi":
+                return str(aid)
+        return ""
+
+    @staticmethod
+    def _get_pmc_id(article_id_list) -> str:
+        """从 ArticleIdList 中提取 PMC ID。"""
+        for aid in article_id_list:
+            if aid.attributes.get("IdType") == "pmc":
                 return str(aid)
         return ""
 
@@ -152,7 +220,7 @@ class PubMedRetriever:
         return {
             "endpoints": "从摘要提取的核心终点指标（可扩展NLP解析）",
             "stats": "从摘要提取的统计结果（如P<0.05、HR=0.67等）",
-            "raw_abstract": abstract[:200] + "..." if len(abstract) > 200 else abstract
+            "raw_abstract": abstract[:200] + "..." if len(abstract) > 200 else abstract,
         }
 
     @staticmethod
@@ -161,12 +229,14 @@ class PubMedRetriever:
         if not abstract:
             return None
         # 简单提取：可根据需求扩展NLP解析逻辑
-        objective_keywords = ["研究目的", "旨在", "探究", "探讨", "评估", "分析", "验证"]
+        objective_keywords = [
+            "研究目的", "旨在", "探究", "探讨", "评估", "分析", "验证"
+        ]
         for kw in objective_keywords:
             if kw in abstract:
                 idx = abstract.index(kw)
                 # 提取关键词后200个字符作为研究目标（可调整长度）
-                return abstract[idx:idx+200].replace("\n", "").strip()
+                return abstract[idx:idx + 200].replace("\n", "").strip()
         return None
 
     @staticmethod

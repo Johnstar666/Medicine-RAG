@@ -1,3 +1,5 @@
+# DEPRECATED: 请使用 infrastructure.persistence.postgres_db
+# 该文件保留仅用于向后兼容，新功能请使用新模块。
 import json
 import psycopg2
 

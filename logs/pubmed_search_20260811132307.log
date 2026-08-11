@@ -1,0 +1,57 @@
+2026-08-11 13:23:09,084 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test query, max_results=3
+2026-08-11 13:23:09,085 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,085 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,085 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33333333, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,085 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=3, new=3, ingested=3, skipped=0, failed=0
+2026-08-11 13:23:09,087 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test query, max_results=3
+2026-08-11 13:23:09,087 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.SKIPPED, title=
+2026-08-11 13:23:09,087 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.SKIPPED, title=
+2026-08-11 13:23:09,087 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33333333, status=SearchItemStatus.SKIPPED, title=
+2026-08-11 13:23:09,087 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=3, new=0, ingested=0, skipped=3, failed=0
+2026-08-11 13:23:09,090 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test query, max_results=3
+2026-08-11 13:23:09,091 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,091 - pubmed_search - WARNING - pubmed_search_service.py:255 - Fetch failed for pmid=22222222: Network error fetching 22222222
+2026-08-11 13:23:09,091 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.FAILED, title=
+2026-08-11 13:23:09,091 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33333333, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,091 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=3, new=3, ingested=2, skipped=0, failed=1
+2026-08-11 13:23:09,093 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test query, max_results=2
+2026-08-11 13:23:09,093 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,093 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:09,093 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=2, new=2, ingested=0, skipped=0, failed=0
+2026-08-11 13:23:09,095 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test query, max_results=3
+2026-08-11 13:23:09,095 - pubmed_search - WARNING - pubmed_search_service.py:211 - PubMed search attempt 1 failed: API unavailable. Retrying in 3.0s...
+2026-08-11 13:23:12,096 - pubmed_search - WARNING - pubmed_search_service.py:211 - PubMed search attempt 2 failed: API unavailable. Retrying in 6.0s...
+2026-08-11 13:23:18,097 - pubmed_search - WARNING - pubmed_search_service.py:211 - PubMed search attempt 3 failed: API unavailable. Retrying in 12.0s...
+2026-08-11 13:23:30,098 - pubmed_search - ERROR - pubmed_search_service.py:220 - PubMed search failed after 3 attempts
+2026-08-11 13:23:30,100 - pubmed_search - INFO - pubmed_search_service.py:322 - Starting full ingestion: force=False
+2026-08-11 13:23:30,100 - pubmed_search - INFO - pubmed_search_service.py:344 - Full ingestion completed: total=5, ingested=3, failed=2
+2026-08-11 13:23:30,101 - pubmed_search - INFO - pubmed_search_service.py:322 - Starting full ingestion: force=True
+2026-08-11 13:23:30,102 - pubmed_search - INFO - pubmed_search_service.py:344 - Full ingestion completed: total=0, ingested=0, failed=0
+2026-08-11 13:23:30,103 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=obscure query, max_results=5
+2026-08-11 13:23:30,103 - pubmed_search - INFO - pubmed_search_service.py:103 - Search returned empty PMID list for query: obscure query
+2026-08-11 13:23:30,105 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=2
+2026-08-11 13:23:30,105 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,105 - pubmed_search - WARNING - pubmed_search_service.py:271 - Insert failed for pmid=22222222: Unique constraint violation
+2026-08-11 13:23:30,105 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.FAILED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,106 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=2, new=2, ingested=1, skipped=0, failed=1
+2026-08-11 13:23:30,107 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=2
+2026-08-11 13:23:30,108 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,108 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,108 - pubmed_search - WARNING - pubmed_search_service.py:302 - Ingest failed for pmid=22222222: ChromaDB unavailable
+2026-08-11 13:23:30,108 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=2, new=2, ingested=1, skipped=0, failed=1
+2026-08-11 13:23:30,110 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=2
+2026-08-11 13:23:30,110 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.FAILED, title=
+2026-08-11 13:23:30,110 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.STORED, title=Test Title
+2026-08-11 13:23:30,111 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=2, new=2, ingested=1, skipped=0, failed=1
+2026-08-11 13:23:30,113 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=1
+2026-08-11 13:23:30,113 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,113 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=1, new=1, ingested=0, skipped=0, failed=1
+2026-08-11 13:23:30,115 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=3
+2026-08-11 13:23:30,115 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.SKIPPED, title=
+2026-08-11 13:23:30,116 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=22222222, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,116 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33333333, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:30,116 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=3, new=2, ingested=2, skipped=1, failed=0
+2026-08-11 13:23:30,118 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=test, max_results=1
+2026-08-11 13:23:30,118 - pubmed_search - WARNING - pubmed_search_service.py:211 - PubMed search attempt 1 failed: Temporary network error. Retrying in 3.0s...
+2026-08-11 13:23:33,119 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=11111111, status=SearchItemStatus.STORED, title=Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine
+2026-08-11 13:23:33,119 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=1, new=1, ingested=1, skipped=0, failed=0

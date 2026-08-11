@@ -1,0 +1,13 @@
+2026-08-11 13:52:33,794 - postgres_db - INFO - postgres_db.py:110 - PostgreSQL 连接成功
+2026-08-11 13:52:35,266 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=33301246)
+2026-08-11 13:52:36,693 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=35189345)
+2026-08-11 13:52:37,676 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=40639387)
+2026-08-11 13:52:38,739 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=38432215)
+2026-08-11 13:52:40,020 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=34755408)
+2026-08-11 13:55:24,794 - postgres_db - INFO - postgres_db.py:406 - 删除文献 (pmid=34755408): 成功
+2026-08-11 13:55:24,937 - postgres_db - INFO - postgres_db.py:406 - 删除文献 (pmid=99999999): PMID不存在
+2026-08-11 13:56:47,391 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=29314873)
+2026-08-11 13:56:48,378 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=39084811)
+2026-08-11 13:56:49,439 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=36040537)
+2026-08-11 13:56:50,677 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=37218537)
+2026-08-11 13:56:51,483 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=39369858)

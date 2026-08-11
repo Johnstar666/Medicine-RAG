@@ -1,0 +1,15 @@
+2026-08-11 12:17:36,680 - postgres_db - INFO - postgres_db.py:110 - PostgreSQL 连接成功
+2026-08-11 12:17:36,683 - postgres_db - INFO - postgres_db.py:123 - PostgreSQL 连接已关闭
+2026-08-11 12:17:36,697 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=12345678)
+2026-08-11 12:17:36,700 - postgres_db - ERROR - postgres_db.py:187 - 文献插入失败 (pmid=12345678): duplicate key
+2026-08-11 12:17:36,703 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=12345678)
+2026-08-11 12:17:36,706 - postgres_db - INFO - postgres_db.py:185 - 文献插入成功 (pmid=12345678)
+2026-08-11 12:17:36,730 - postgres_db - INFO - postgres_db.py:335 - 更新摄入状态成功 (pmid=12345678, status=ingested, chunks=3)
+2026-08-11 12:17:36,733 - postgres_db - INFO - postgres_db.py:335 - 更新摄入状态成功 (pmid=12345678, status=ingested, chunks=None)
+2026-08-11 12:17:36,736 - postgres_db - INFO - postgres_db.py:335 - 更新摄入状态成功 (pmid=12345678, status=failed, chunks=None)
+2026-08-11 12:17:36,739 - postgres_db - INFO - postgres_db.py:335 - 更新摄入状态成功 (pmid=12345678, status=ingesting, chunks=None)
+2026-08-11 12:17:36,742 - postgres_db - ERROR - postgres_db.py:340 - 更新摄入状态失败 (pmid=12345678): connection lost
+2026-08-11 12:17:36,755 - postgres_db - INFO - postgres_db.py:406 - 删除文献 (pmid=12345678): 成功
+2026-08-11 12:17:36,758 - postgres_db - INFO - postgres_db.py:406 - 删除文献 (pmid=99999999): PMID不存在
+2026-08-11 12:17:36,761 - postgres_db - ERROR - postgres_db.py:411 - 删除文献失败 (pmid=12345678): connection lost
+2026-08-11 12:17:36,764 - postgres_db - INFO - postgres_db.py:110 - PostgreSQL 连接成功

@@ -1,0 +1,62 @@
+INFO:     Started server process [30000]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+2026-08-11 13:52:32,772 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='COVID-19 mRNA vaccine efficacy', max_results=3
+2026-08-11 13:52:32,773 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=COVID-19 mRNA vaccine efficacy, max_results=3
+2026-08-11 13:52:33,580 - agent - INFO - pubmed_retriever.py:138 - 妫�绱㈠埌5绡囨枃鐚�锛孭MID锛歔'33301246', '35189345', '40639387', '38432215', '34755408']
+2026-08-11 13:52:33,794 - postgres_db - INFO - postgres_db.py:110 - PostgreSQL 杩炴帴鎴愬姛
+2026-08-11 13:52:35,266 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=33301246)
+2026-08-11 13:52:35,266 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33301246, status=SearchItemStatus.STORED, title=Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine.
+2026-08-11 13:52:36,693 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=35189345)
+2026-08-11 13:52:36,693 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=35189345, status=SearchItemStatus.STORED, title=COVID-19 mRNA vaccines: Platforms and current developments.
+2026-08-11 13:52:37,676 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=40639387)
+2026-08-11 13:52:37,676 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=40639387, status=SearchItemStatus.STORED, title=Efficacy, immunogenicity, and safety of a next-generation mR
+2026-08-11 13:52:38,739 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=38432215)
+2026-08-11 13:52:38,740 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=38432215, status=SearchItemStatus.STORED, title=Efficacy and Clinical Outcomes of mRNA COVID-19 Vaccine in P
+2026-08-11 13:52:40,020 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=34755408)
+2026-08-11 13:52:40,021 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=34755408, status=SearchItemStatus.STORED, title=Covid-19 vaccines and variants of concern: A review.
+2026-08-11 13:52:40,021 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=5, new=5, ingested=0, skipped=0, failed=0
+2026-08-11 13:55:24,789 - pubmed_ingester - INFO - pubmed_ingester.py:367 - 浠庡悜閲忓瓨鍌ㄤ腑鍒犻櫎 PMID 34755408: 0 涓� chunks
+2026-08-11 13:55:24,789 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 0 vector chunks for PMID 34755408
+2026-08-11 13:55:24,794 - postgres_db - INFO - postgres_db.py:406 - 鍒犻櫎鏂囩尞 (pmid=34755408): 鎴愬姛
+2026-08-11 13:55:24,795 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 34755408: True
+2026-08-11 13:55:24,936 - pubmed_ingester - INFO - pubmed_ingester.py:367 - 浠庡悜閲忓瓨鍌ㄤ腑鍒犻櫎 PMID 99999999: 0 涓� chunks
+2026-08-11 13:55:24,936 - knowledge_mgmt - INFO - knowledge_management_service.py:230 - Deleted 0 vector chunks for PMID 99999999
+2026-08-11 13:55:24,937 - postgres_db - INFO - postgres_db.py:406 - 鍒犻櫎鏂囩尞 (pmid=99999999): PMID涓嶅瓨鍦�
+2026-08-11 13:55:24,937 - knowledge_mgmt - INFO - knowledge_management_service.py:241 - Deleted PG record for PMID 99999999: False
+2026-08-11 13:55:58,381 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='xyzasdfghjkl12345', max_results=3
+2026-08-11 13:55:58,381 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=xyzasdfghjkl12345, max_results=3
+2026-08-11 13:55:58,967 - agent - WARNING - pubmed_retriever.py:136 - 鏌ヨ�㈣瘝銆寈yzasdfghjkl12345銆嶆湭妫�绱㈠埌鏂囩尞
+2026-08-11 13:55:58,967 - pubmed_search - INFO - pubmed_search_service.py:103 - Search returned empty PMID list for query: xyzasdfghjkl12345
+2026-08-11 13:56:45,123 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='diabetes treatment guidelines', max_results=5
+2026-08-11 13:56:45,124 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=diabetes treatment guidelines, max_results=5
+2026-08-11 13:56:45,891 - agent - INFO - pubmed_retriever.py:138 - 妫�绱㈠埌5绡囨枃鐚�锛孭MID锛歔'29314873', '39084811', '36040537', '37218537', '39369858']
+2026-08-11 13:56:47,391 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=29314873)
+2026-08-11 13:56:47,391 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=29314873, status=SearchItemStatus.STORED, title=2018 AAHA Diabetes Management Guidelines for Dogs and Cats.
+2026-08-11 13:56:48,378 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=39084811)
+2026-08-11 13:56:48,378 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=39084811, status=SearchItemStatus.STORED, title=Diagnosis and Treatment of Hyperglycemia in Pregnancy: Type 
+2026-08-11 13:56:49,439 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=36040537)
+2026-08-11 13:56:49,439 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=36040537, status=SearchItemStatus.STORED, title=Social Care Recommendations in National Diabetes Treatment G
+2026-08-11 13:56:50,677 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=37218537)
+2026-08-11 13:56:50,678 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=37218537, status=SearchItemStatus.STORED, title=Guidelines on the diagnosis and treatment of active Charcot 
+2026-08-11 13:56:51,483 - postgres_db - INFO - postgres_db.py:185 - 鏂囩尞鎻掑叆鎴愬姛 (pmid=39369858)
+2026-08-11 13:56:51,483 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=39369858, status=SearchItemStatus.STORED, title=Type 2 diabetes in children and adolescents: Challenges for 
+2026-08-11 13:56:51,483 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=5, new=5, ingested=0, skipped=0, failed=0
+
+ERROR conda.cli.main_run:execute(127): `conda run python main.py` failed. (See above for error)
+INFO:     ::1:64745 - "GET /docs HTTP/1.1" 200 OK
+INFO:     ::1:64753 - "POST /pubmed/search HTTP/1.1" 200 OK
+INFO:     ::1:64798 - "GET /pubmed/articles?page=1&page_size=3 HTTP/1.1" 200 OK
+INFO:     ::1:64799 - "GET /pubmed/articles?search=vaccine&page=1&page_size=2 HTTP/1.1" 200 OK
+INFO:     ::1:64811 - "GET /pubmed/articles/33301246 HTTP/1.1" 200 OK
+INFO:     ::1:64812 - "GET /knowledge/stats HTTP/1.1" 200 OK
+INFO:     ::1:64831 - "DELETE /pubmed/articles/34755408 HTTP/1.1" 200 OK
+INFO:     ::1:64832 - "GET /pubmed/articles/34755408 HTTP/1.1" 404 Not Found
+INFO:     ::1:64833 - "DELETE /pubmed/articles/99999999 HTTP/1.1" 404 Not Found
+INFO:     ::1:64838 - "POST /pubmed/search HTTP/1.1" 422 Unprocessable Entity
+INFO:     ::1:64839 - "POST /pubmed/search HTTP/1.1" 422 Unprocessable Entity
+INFO:     ::1:64840 - "POST /pubmed/search HTTP/1.1" 200 OK
+INFO:     ::1:64881 - "POST /pubmed/search HTTP/1.1" 200 OK
+INFO:     ::1:64894 - "GET /knowledge/stats HTTP/1.1" 200 OK
+

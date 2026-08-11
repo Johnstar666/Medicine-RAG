@@ -1,0 +1,82 @@
+2026-08-11 12:32:03,289 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='COVID-19 vaccine', max_results=5
+2026-08-11 12:32:03,289 - pubmed_pipeline - INFO - paper_search.py:72 - Found 2 PMIDs for query 'COVID-19 vaccine'
+2026-08-11 12:32:03,289 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301246 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,289 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301247 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,289 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=2, skipped=0, failed=0, total=2
+2026-08-11 12:32:03,292 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=1
+2026-08-11 12:32:03,292 - pubmed_pipeline - INFO - paper_search.py:72 - Found 1 PMIDs for query 'test query'
+2026-08-11 12:32:03,292 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301246 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,292 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=1, skipped=0, failed=0, total=1
+2026-08-11 12:32:03,294 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='specific query', max_results=3
+2026-08-11 12:32:03,294 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'specific query'
+2026-08-11 12:32:03,295 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='nonexistent query', max_results=5
+2026-08-11 12:32:03,296 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'nonexistent query'
+2026-08-11 12:32:03,297 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='query', max_results=5
+2026-08-11 12:32:03,297 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'query'
+2026-08-11 12:32:03,299 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=5
+2026-08-11 12:32:03,299 - pubmed_pipeline - INFO - paper_search.py:72 - Found 2 PMIDs for query 'test query'
+2026-08-11 12:32:03,299 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 33301246 already exists, skipped
+2026-08-11 12:32:03,300 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301247 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,300 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=1, skipped=1, failed=0, total=2
+2026-08-11 12:32:03,301 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=5
+2026-08-11 12:32:03,301 - pubmed_pipeline - INFO - paper_search.py:72 - Found 3 PMIDs for query 'test query'
+2026-08-11 12:32:03,302 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 33301246 already exists, skipped
+2026-08-11 12:32:03,302 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 33301247 already exists, skipped
+2026-08-11 12:32:03,302 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 33301248 already exists, skipped
+2026-08-11 12:32:03,302 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=0, skipped=3, failed=0, total=3
+2026-08-11 12:32:03,303 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=5
+2026-08-11 12:32:03,304 - pubmed_pipeline - INFO - paper_search.py:72 - Found 3 PMIDs for query 'test query'
+2026-08-11 12:32:03,304 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301246 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,304 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301247: Network timeout
+2026-08-11 12:32:03,304 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301248 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,304 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=2, skipped=0, failed=1, total=3
+2026-08-11 12:32:03,306 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=5
+2026-08-11 12:32:03,306 - pubmed_pipeline - INFO - paper_search.py:72 - Found 2 PMIDs for query 'test query'
+2026-08-11 12:32:03,306 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301246: DB connection lost
+2026-08-11 12:32:03,306 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 33301247 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:03,306 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=1, skipped=0, failed=1, total=2
+2026-08-11 12:32:03,308 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=5
+2026-08-11 12:32:03,308 - pubmed_pipeline - INFO - paper_search.py:72 - Found 2 PMIDs for query 'test query'
+2026-08-11 12:32:03,309 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301246: Total failure
+2026-08-11 12:32:03,309 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301247: Total failure
+2026-08-11 12:32:03,309 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=0, skipped=0, failed=2, total=2
+2026-08-11 12:32:03,310 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test query', max_results=1
+2026-08-11 12:32:03,310 - pubmed_pipeline - INFO - paper_search.py:72 - Found 1 PMIDs for query 'test query'
+2026-08-11 12:32:03,311 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301246: Fail
+2026-08-11 12:32:03,311 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=0, skipped=0, failed=1, total=1
+2026-08-11 12:32:03,312 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=10
+2026-08-11 12:32:03,312 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'test'
+2026-08-11 12:32:03,315 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=5
+2026-08-11 12:32:04,641 - pubmed_pipeline - INFO - paper_search.py:72 - Found 5 PMIDs for query 'test'
+2026-08-11 12:32:05,569 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 30226337 inserted successfully: 'A review of the non-equivalent control group post-test-only design.'
+2026-08-11 12:32:06,247 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 39792095 inserted successfully: 'Understanding the independent samples t test in nursing research.'
+2026-08-11 12:32:07,346 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 31382776 inserted successfully: 'Test Frequency, Stakes, and Feedback in Student Achievement: A Meta-Analysis.'
+2026-08-11 12:32:08,575 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 38865112 inserted successfully: 'Test-Negative Study Designs for Evaluating Vaccine Effectiveness.'
+2026-08-11 12:32:09,369 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 35124947 inserted successfully: 'Receiver operating characteristic curve: overview and practical use for clinicians.'
+2026-08-11 12:32:09,369 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=5, skipped=0, failed=0, total=5
+2026-08-11 12:32:09,464 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=5
+2026-08-11 12:32:09,465 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'test'
+2026-08-11 12:32:09,466 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=1
+2026-08-11 12:32:09,466 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'test'
+2026-08-11 12:32:09,468 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=1
+2026-08-11 12:32:09,468 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'test'
+2026-08-11 12:32:09,470 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=1
+2026-08-11 12:32:09,470 - pubmed_pipeline - INFO - paper_search.py:72 - Found 1 PMIDs for query 'test'
+2026-08-11 12:32:09,470 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 33301246: Boom
+2026-08-11 12:32:09,470 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=0, skipped=0, failed=1, total=1
+2026-08-11 12:32:09,472 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=1
+2026-08-11 12:32:09,472 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'test'
+2026-08-11 12:32:09,485 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='heart', max_results=5
+2026-08-11 12:32:09,486 - pubmed_pipeline - INFO - paper_search.py:69 - No PMIDs found for query 'heart'
+2026-08-11 12:32:09,489 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='multi status', max_results=5
+2026-08-11 12:32:09,489 - pubmed_pipeline - INFO - paper_search.py:72 - Found 5 PMIDs for query 'multi status'
+2026-08-11 12:32:09,489 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 1 already exists, skipped
+2026-08-11 12:32:09,489 - pubmed_pipeline - ERROR - paper_search.py:101 - Failed to process PMID 2: Fetch error
+2026-08-11 12:32:09,490 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 3 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:09,490 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 4 already exists, skipped
+2026-08-11 12:32:09,490 - pubmed_pipeline - INFO - paper_search.py:97 - PMID 5 inserted successfully: 'Efficacy and Safety of the mRNA-1273 SARS-CoV-2 Vaccine'
+2026-08-11 12:32:09,490 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=2, skipped=2, failed=1, total=5
+2026-08-11 12:32:09,491 - pubmed_pipeline - INFO - paper_search.py:59 - Starting PubMed search pipeline: query='test', max_results=1
+2026-08-11 12:32:09,491 - pubmed_pipeline - INFO - paper_search.py:72 - Found 1 PMIDs for query 'test'
+2026-08-11 12:32:09,491 - pubmed_pipeline - INFO - paper_search.py:85 - PMID 33301246 already exists, skipped
+2026-08-11 12:32:09,492 - pubmed_pipeline - INFO - paper_search.py:108 - Pipeline finished: inserted=0, skipped=1, failed=0, total=1

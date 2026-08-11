@@ -1,0 +1,104 @@
+2026-08-11 14:43:26,816 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='COVID-19', max_results=5
+2026-08-11 14:43:26,835 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='test', max_results=5
+2026-08-11 14:43:26,836 - pubmed_router - ERROR - pubmed_router.py:133 - PubMed search RuntimeError: NCBI unreachable
+2026-08-11 14:43:26,844 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='test', max_results=5
+2026-08-11 14:43:26,844 - pubmed_router - ERROR - pubmed_router.py:139 - PubMed search unexpected error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 127, in search_pubmed
+    result = service.search_and_store(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+Exception: Unexpected error
+2026-08-11 14:43:26,869 - pubmed_router - INFO - pubmed_router.py:120 - PubMed search request: query='test', max_results=5
+2026-08-11 14:43:26,920 - pubmed_router - WARNING - pubmed_router.py:198 - list_articles ValueError: page must be >= 1
+2026-08-11 14:43:26,925 - pubmed_router - ERROR - pubmed_router.py:201 - list_articles unexpected error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 189, in list_articles
+    result = km.list_articles(
+             ^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB down
+2026-08-11 14:43:26,948 - pubmed_router - ERROR - pubmed_router.py:231 - get_article_detail error for pmid=111
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 229, in get_article_detail
+    result = km.get_article_detail(pmid)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB error
+2026-08-11 14:43:26,976 - pubmed_router - ERROR - pubmed_router.py:345 - ingest_single_article error for pmid=111
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 343, in ingest_single_article
+    ingest_result = ingester.ingest_article(pmid, force=force)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB down
+2026-08-11 14:43:26,996 - pubmed_router - ERROR - pubmed_router.py:262 - ingest_batch error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 260, in ingest_batch
+    results = ingester.batch_ingest(request.pmids, force=request.force)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: Batch failed
+2026-08-11 14:43:27,013 - pubmed_router - ERROR - pubmed_router.py:313 - ingest_all_uningested error
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 311, in ingest_all_uningested
+    result = service.ingest_all_uningested()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB error
+2026-08-11 14:43:27,106 - pubmed_router - ERROR - pubmed_router.py:394 - delete_article error for pmid=111
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 392, in delete_article
+    result: DeleteResultData = km.delete_article(pmid)
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB error

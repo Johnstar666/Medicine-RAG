@@ -1,0 +1,14 @@
+2026-08-11 13:14:30,874 - pubmed_router - ERROR - pubmed_router.py:266 - ingest_single_article error for pmid=111
+Traceback (most recent call last):
+  File "E:\实习资料-芯筹科技\Medicine_RAG_Project\api\routers\pubmed_router.py", line 264, in ingest_single_article
+    ingest_result = ingester.ingest_article(pmid, force=force)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1124, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1128, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\develop\anaconda3\envs\medicine-rag\Lib\unittest\mock.py", line 1183, in _execute_mock_call
+    raise effect
+RuntimeError: DB down

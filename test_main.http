@@ -1,23 +1,94 @@
 # Test your FastAPI endpoints
 
+### 健康检查
 GET http://127.0.0.1:8000/health
 Accept: application/json
 
 ###
 
-POST http://127.0.0.1:8000//rag/query
+### RAG 混合查询（后向兼容）
+POST http://127.0.0.1:8000/rag/query
 Content-Type: application/json
 
 {
-  "question": "临床医学"
+  "question": "mRNA疫苗的有效性数据是什么？"
 }
 
 ###
 
+### 邮件测试
 GET http://127.0.0.1:8000/mail/test?email=202330550711@mail.scut.edu.cn
 Accept: application/json
 
 ###
 
+### PubMed: 触发搜索并入库（auto_ingest=true 会执行向量索引，需 DASHSCOPE_API_KEY）
+POST http://127.0.0.1:8000/pubmed/search
+Content-Type: application/json
 
+{
+  "query": "COVID-19 mRNA vaccine efficacy",
+  "max_results": 3,
+  "auto_ingest": true
+}
 
+###
+
+### PubMed: 分页浏览文献
+GET http://127.0.0.1:8000/pubmed/articles?page=1&page_size=5
+Accept: application/json
+
+###
+
+### PubMed: 按关键词模糊搜索
+GET http://127.0.0.1:8000/pubmed/articles?search=vaccine&page=1&page_size=5
+Accept: application/json
+
+###
+
+### PubMed: 按状态过滤（未入库）
+GET http://127.0.0.1:8000/pubmed/articles?ingestion_status=uningested&page=1&page_size=5
+Accept: application/json
+
+###
+
+### PubMed: 获取单篇文献详情（替换为实际 PMID）
+GET http://127.0.0.1:8000/pubmed/articles/12345678
+Accept: application/json
+
+###
+
+### PubMed: 手动索引单篇文献
+POST http://127.0.0.1:8000/pubmed/ingest/12345678?force=false
+Content-Type: application/json
+
+###
+
+### PubMed: 批量索引
+POST http://127.0.0.1:8000/pubmed/ingest/batch
+Content-Type: application/json
+
+{
+  "pmids": ["12345678", "87654321"],
+  "force": false
+}
+
+###
+
+### PubMed: 一键索引所有未入库文献
+POST http://127.0.0.1:8000/pubmed/ingest/all-uningested
+Content-Type: application/json
+
+###
+
+### PubMed: 删除文献（PG + ChromaDB 级联）
+DELETE http://127.0.0.1:8000/pubmed/articles/12345678
+Accept: application/json
+
+###
+
+### 知识库统计
+GET http://127.0.0.1:8000/knowledge/stats
+Accept: application/json
+
+###

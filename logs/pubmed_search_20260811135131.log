@@ -1,0 +1,16 @@
+2026-08-11 13:52:32,773 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=COVID-19 mRNA vaccine efficacy, max_results=3
+2026-08-11 13:52:35,266 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=33301246, status=SearchItemStatus.STORED, title=Safety and Efficacy of the BNT162b2 mRNA Covid-19 Vaccine.
+2026-08-11 13:52:36,693 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=35189345, status=SearchItemStatus.STORED, title=COVID-19 mRNA vaccines: Platforms and current developments.
+2026-08-11 13:52:37,676 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=40639387, status=SearchItemStatus.STORED, title=Efficacy, immunogenicity, and safety of a next-generation mR
+2026-08-11 13:52:38,740 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=38432215, status=SearchItemStatus.STORED, title=Efficacy and Clinical Outcomes of mRNA COVID-19 Vaccine in P
+2026-08-11 13:52:40,021 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=34755408, status=SearchItemStatus.STORED, title=Covid-19 vaccines and variants of concern: A review.
+2026-08-11 13:52:40,021 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=5, new=5, ingested=0, skipped=0, failed=0
+2026-08-11 13:55:58,381 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=xyzasdfghjkl12345, max_results=3
+2026-08-11 13:55:58,967 - pubmed_search - INFO - pubmed_search_service.py:103 - Search returned empty PMID list for query: xyzasdfghjkl12345
+2026-08-11 13:56:45,124 - pubmed_search - INFO - pubmed_search_service.py:96 - Search started: query=diabetes treatment guidelines, max_results=5
+2026-08-11 13:56:47,391 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=29314873, status=SearchItemStatus.STORED, title=2018 AAHA Diabetes Management Guidelines for Dogs and Cats.
+2026-08-11 13:56:48,378 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=39084811, status=SearchItemStatus.STORED, title=Diagnosis and Treatment of Hyperglycemia in Pregnancy: Type 
+2026-08-11 13:56:49,439 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=36040537, status=SearchItemStatus.STORED, title=Social Care Recommendations in National Diabetes Treatment G
+2026-08-11 13:56:50,678 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=37218537, status=SearchItemStatus.STORED, title=Guidelines on the diagnosis and treatment of active Charcot 
+2026-08-11 13:56:51,483 - pubmed_search - INFO - pubmed_search_service.py:120 - Article processed: pmid=39369858, status=SearchItemStatus.STORED, title=Type 2 diabetes in children and adolescents: Challenges for 
+2026-08-11 13:56:51,483 - pubmed_search - INFO - pubmed_search_service.py:164 - Search completed: found=5, new=5, ingested=0, skipped=0, failed=0
